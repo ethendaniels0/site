@@ -205,13 +205,15 @@ html {
   font-size: var(--font-size);
 }
 
-/* Hide scrollbar for blog content */
-.blog-content-scroll {
+/* Hide scrollbar for blog and story content */
+.blog-content-scroll,
+.story-content-scroll {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 }
 
-.blog-content-scroll::-webkit-scrollbar {
+.blog-content-scroll::-webkit-scrollbar,
+.story-content-scroll::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
 

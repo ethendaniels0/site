@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Calendar, Clock } from "lucide-react"
+import { Calendar } from "lucide-react"
 import { getAllStories, Story } from "../lib/stories"
 import { StoryView } from "./StoryView"
 
@@ -35,34 +35,23 @@ export function StoriesSection() {
               <button
                 key={story.slug}
                 onClick={() => setSelectedStory(story)}
-                className={`w-full text-left p-3 rounded-md transition-colors ${
+                className={`w-full text-left p-2 rounded-md transition-colors ${
                   selectedStory?.slug === story.slug 
                     ? "bg-accent text-accent-foreground" 
                     : "hover:bg-muted"
                 }`}
               >
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <h3 className="font-medium text-sm leading-tight">
                     {story.title}
                   </h3>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Calendar className="h-3 w-3" />
                     {new Date(story.date).toLocaleDateString('en-US', { 
                       month: 'short', 
                       day: 'numeric',
                       year: 'numeric'
                     })}
-                    {story.category && (
-                      <span className="px-1.5 py-0.5 bg-muted rounded">
-                        {story.category}
-                      </span>
-                    )}
-                    {story.readTime && (
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {story.readTime}
-                      </div>
-                    )}
                   </div>
                 </div>
               </button>
