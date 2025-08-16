@@ -1,5 +1,4 @@
-import { Button } from "./ui/button"
-import { ArrowLeft, Calendar, Tag } from "lucide-react"
+import { Calendar, Tag } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { BlogPost } from "../lib/posts"
@@ -9,19 +8,9 @@ interface BlogPostViewProps {
   onBack: () => void
 }
 
-export function BlogPostView({ post, onBack }: BlogPostViewProps) {
+export function BlogPostView({ post }: BlogPostViewProps) {
   return (
     <article className="space-y-6">
-      <Button 
-        variant="ghost" 
-        size="sm"
-        onClick={onBack}
-        className="mb-4"
-      >
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to posts
-      </Button>
-      
       <header className="space-y-4 pb-6 border-b">
         <h1 className="text-3xl font-bold">{post.title}</h1>
         

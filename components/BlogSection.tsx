@@ -1,78 +1,74 @@
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
-import { Calendar, Tag } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Calendar } from "lucide-react"
 import { getAllPosts, BlogPost } from "../lib/posts"
 import { BlogPostView } from "./BlogPostView"
 
 export function BlogSection() {
-  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
   const posts = getAllPosts()
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
   
-  if (selectedPost) {
+  // Auto-select the most recent post on mount
+  useEffect(() => {
+    if (posts.length > 0 && !selectedPost) {
+      setSelectedPost(posts[0])
+    }
+  }, [posts])
+  
+  if (posts.length === 0) {
     return (
-      <BlogPostView 
-        post={selectedPost} 
-        onBack={() => setSelectedPost(null)} 
-      />
+      <div className="bg-muted/50 p-8 rounded-lg text-center">
+        <p className="text-muted-foreground">
+          No blog posts yet. Add markdown files to <code className="text-sm bg-muted px-2 py-1 rounded">content/blog/</code> to get started.
+        </p>
+      </div>
     )
   }
   
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="mb-2">Blog</h1>
-        <p className="text-muted-foreground">Thoughts, experiences, and musings from my journey.</p>
-      </div>
-      
-      <div className="space-y-4">
-        {posts.map((post) => (
-          <Card 
-            key={post.slug} 
-            className="hover:shadow-md transition-shadow cursor-pointer"
-            onClick={() => setSelectedPost(post)}
-          >
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="hover:text-primary transition-colors">
-                  {post.title}
-                </CardTitle>
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <Calendar className="h-4 w-4" />
-                  {new Date(post.date).toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    day: 'numeric',
-                    year: 'numeric'
-                  })}
+    <div className="grid grid-cols-12 gap-8 h-full">
+      {/* Posts list sidebar */}
+      <div className="col-span-4 border-r pr-6">
+        <div className="sticky top-0">
+          <h2 className="text-lg font-semibold mb-4">Posts</h2>
+          <div className="space-y-2">
+            {posts.map((post) => (
+              <button
+                key={post.slug}
+                onClick={() => setSelectedPost(post)}
+                className={`w-full text-left p-3 rounded-md transition-colors ${
+                  selectedPost?.slug === post.slug 
+                    ? "bg-accent text-accent-foreground" 
+                    : "hover:bg-muted"
+                }`}
+              >
+                <div className="space-y-1">
+                  <h3 className="font-medium text-sm leading-tight">
+                    {post.title}
+                  </h3>
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <Calendar className="h-3 w-3" />
+                    {new Date(post.date).toLocaleDateString('en-US', { 
+                      month: 'short', 
+                      day: 'numeric',
+                      year: 'numeric'
+                    })}
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <p className="text-muted-foreground">{post.excerpt}</p>
-              {post.tags && post.tags.length > 0 && (
-                <div className="flex items-center gap-2 flex-wrap">
-                  <Tag className="h-3 w-3 text-muted-foreground" />
-                  {post.tags.map(tag => (
-                    <span 
-                      key={tag}
-                      className="text-xs px-2 py-1 bg-muted rounded-md"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-      
-      {posts.length === 0 && (
-        <div className="bg-muted/50 p-8 rounded-lg text-center">
-          <p className="text-muted-foreground">
-            No blog posts yet. Add markdown files to <code className="text-sm bg-muted px-2 py-1 rounded">content/blog/</code> to get started.
-          </p>
+              </button>
+            ))}
+          </div>
         </div>
-      )}
+      </div>
+      
+      {/* Post content */}
+      <div className="col-span-8">
+        {selectedPost && (
+          <BlogPostView 
+            post={selectedPost} 
+            onBack={() => {}} // No-op since we don't need back functionality
+          />
+        )}
+      </div>
     </div>
   )
 }
