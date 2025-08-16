@@ -140,7 +140,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Courier Prime', monospace;
+    font-family: 'PT Serif', serif;
   }
 }
 
