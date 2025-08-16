@@ -25,9 +25,9 @@ export function BlogSection() {
   }
   
   return (
-    <div className="flex h-full gap-8">
+    <div className="flex h-full gap-6">
       {/* Posts list sidebar */}
-      <div className="w-64 flex-shrink-0">
+      <div className="w-80 flex-shrink-0">
         <div className="sticky top-0 pl-2">
           <h2 className="text-lg font-semibold mb-4">Posts</h2>
           <div className="space-y-2 pr-4">
@@ -61,13 +61,15 @@ export function BlogSection() {
       </div>
       
       {/* Post content */}
-      <div className="flex-1 overflow-y-auto pr-6" style={{ height: 'calc(100vh - 6rem)' }}>
-        {selectedPost && (
-          <BlogPostView 
-            post={selectedPost} 
-            onBack={() => {}} // No-op since we don't need back functionality
-          />
-        )}
+      <div className="flex-1 overflow-y-auto pr-6 blog-content-scroll" style={{ height: 'calc(100vh - 6rem)' }}>
+        <div className="max-w-3xl mx-auto px-8">
+          {selectedPost && (
+            <BlogPostView 
+              post={selectedPost} 
+              onBack={() => {}} // No-op since we don't need back functionality
+            />
+          )}
+        </div>
       </div>
     </div>
   )
