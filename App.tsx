@@ -28,6 +28,7 @@ import { StoriesSection } from "./components/StoriesSection"
 import { BookshelfSection } from "./components/BookshelfSection"
 import { Button } from "./components/ui/button"
 import { Separator } from "./components/ui/separator"
+import { Analytics } from "@vercel/analytics/react"
 
 const navigation = [
   {
@@ -165,6 +166,7 @@ export default function App() {
           )}
         </main>
       </div>
+      <Analytics />
     </SidebarProvider>
   )
 }
