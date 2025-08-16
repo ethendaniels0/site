@@ -116,7 +116,6 @@ function AppSidebar({ activeSection, setActiveSection }: {
                   <SidebarMenuButton 
                     onClick={() => setActiveSection(item.id)}
                     isActive={activeSection === item.id}
-                    className="w-full justify-start"
                   >
                     <item.icon className="h-4 w-4" />
                     {item.title}
