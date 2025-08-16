@@ -15,6 +15,7 @@ title: Your Post Title
 date: 2024-03-20
 excerpt: A brief description of your post
 tags: [tag1, tag2, tag3]
+slug: custom-url-slug  # Optional: defaults to filename
 ---
 
 # Your Markdown Content Here
@@ -22,7 +23,12 @@ tags: [tag1, tag2, tag3]
 Write your post using standard markdown...
 ```
 
-That's it! Your new post will be automatically loaded and displayed on the blog. The filename (without `.md`) becomes the post's URL slug.
+That's it! Your new post will be automatically loaded and displayed on the blog. 
+
+**URL Routing:**
+- By default, the filename (without `.md`) becomes the post's URL: `/blog/your-filename`
+- You can override this by adding `slug: custom-slug` in the frontmatter
+- Each post gets its own unique URL that can be bookmarked and shared
 
 ## Stories System
 
@@ -41,6 +47,7 @@ excerpt: A brief description of your story
 category: Travel, Life, Growth, People, etc.
 readTime: 5 min read
 likes: 0
+slug: custom-url-slug  # Optional: defaults to filename
 ---
 
 # Your Story Content Here
@@ -48,7 +55,12 @@ likes: 0
 Write your story using standard markdown...
 ```
 
-That's it! Your new story will be automatically loaded and displayed in the stories section. The filename (without `.md`) becomes the story's URL slug.
+That's it! Your new story will be automatically loaded and displayed in the stories section.
+
+**URL Routing:**
+- By default, the filename (without `.md`) becomes the story's URL: `/stories/your-filename`
+- You can override this by adding `slug: custom-slug` in the frontmatter
+- Each story gets its own unique URL that can be bookmarked and shared
 
 ### Markdown Features Supported
 

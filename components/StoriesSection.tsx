@@ -1,18 +1,31 @@
 import { useState, useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import { Calendar } from "lucide-react"
-import { getAllStories, Story } from "../lib/stories"
+import { getAllStories, getStoryBySlug, Story } from "../lib/stories"
 import { StoryView } from "./StoryView"
 
 export function StoriesSection() {
   const stories = getAllStories()
+  const { slug } = useParams()
+  const navigate = useNavigate()
   const [selectedStory, setSelectedStory] = useState<Story | null>(null)
   
-  // Auto-select the most recent story on mount
+  // Handle slug-based selection or auto-select the most recent story
   useEffect(() => {
-    if (stories.length > 0 && !selectedStory) {
+    if (slug) {
+      const story = getStoryBySlug(slug)
+      if (story) {
+        setSelectedStory(story)
+      } else {
+        // If slug doesn't exist, redirect to stories home
+        navigate('/stories')
+      }
+    } else if (stories.length > 0) {
       setSelectedStory(stories[0])
+      // Update URL to include the slug of the first story
+      navigate(`/stories/${stories[0].slug}`, { replace: true })
     }
-  }, [stories])
+  }, [slug, stories, navigate])
   
   if (stories.length === 0) {
     return (
@@ -34,7 +47,10 @@ export function StoriesSection() {
             {stories.map((story) => (
               <button
                 key={story.slug}
-                onClick={() => setSelectedStory(story)}
+                onClick={() => {
+                  setSelectedStory(story)
+                  navigate(`/stories/${story.slug}`)
+                }}
                 className={`w-full text-left p-2 rounded-md transition-colors ${
                   selectedStory?.slug === story.slug 
                     ? "bg-accent text-accent-foreground" 

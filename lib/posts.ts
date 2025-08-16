@@ -16,14 +16,14 @@ const blogPostModules = import.meta.glob('../content/blog/*.md', {
 }) as Record<string, string>
 
 // Helper function to parse frontmatter
-function parseFrontmatter(content: string, slug: string): BlogPost {
+function parseFrontmatter(content: string, fileSlug: string): BlogPost {
   const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---/
   const match = content.match(frontmatterRegex)
   
   if (!match) {
     return {
-      slug,
-      title: slug,
+      slug: fileSlug,
+      title: fileSlug,
       date: new Date().toISOString(),
       excerpt: '',
       content: content,
@@ -35,14 +35,15 @@ function parseFrontmatter(content: string, slug: string): BlogPost {
   const markdownContent = content.replace(frontmatterRegex, '').trim()
   
   // Parse frontmatter fields
-  const title = frontmatter.match(/title:\s*(.+)/)?.[1] || slug
+  const title = frontmatter.match(/title:\s*(.+)/)?.[1] || fileSlug
   const date = frontmatter.match(/date:\s*(.+)/)?.[1] || new Date().toISOString()
   const excerpt = frontmatter.match(/excerpt:\s*(.+)/)?.[1] || ''
+  const customSlug = frontmatter.match(/slug:\s*(.+)/)?.[1] // Custom slug from frontmatter
   const tagsMatch = frontmatter.match(/tags:\s*\[(.+)\]/)
   const tags = tagsMatch ? tagsMatch[1].split(',').map(t => t.trim()) : []
   
   return {
-    slug,
+    slug: customSlug || fileSlug, // Use custom slug if provided, otherwise use filename
     title,
     date,
     excerpt,

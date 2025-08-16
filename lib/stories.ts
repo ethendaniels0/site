@@ -18,14 +18,14 @@ const storyModules = import.meta.glob('../content/stories/*.md', {
 }) as Record<string, string>
 
 // Helper function to parse frontmatter
-function parseFrontmatter(content: string, slug: string): Story {
+function parseFrontmatter(content: string, fileSlug: string): Story {
   const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---/
   const match = content.match(frontmatterRegex)
   
   if (!match) {
     return {
-      slug,
-      title: slug,
+      slug: fileSlug,
+      title: fileSlug,
       date: new Date().toISOString(),
       excerpt: '',
       content: content,
@@ -39,15 +39,16 @@ function parseFrontmatter(content: string, slug: string): Story {
   const markdownContent = content.replace(frontmatterRegex, '').trim()
   
   // Parse frontmatter fields
-  const title = frontmatter.match(/title:\s*(.+)/)?.[1] || slug
+  const title = frontmatter.match(/title:\s*(.+)/)?.[1] || fileSlug
   const date = frontmatter.match(/date:\s*(.+)/)?.[1] || new Date().toISOString()
   const excerpt = frontmatter.match(/excerpt:\s*(.+)/)?.[1] || ''
+  const customSlug = frontmatter.match(/slug:\s*(.+)/)?.[1] // Custom slug from frontmatter
   const category = frontmatter.match(/category:\s*(.+)/)?.[1] || 'General'
   const readTime = frontmatter.match(/readTime:\s*(.+)/)?.[1] || '5 min read'
   const likes = parseInt(frontmatter.match(/likes:\s*(\d+)/)?.[1] || '0')
   
   return {
-    slug,
+    slug: customSlug || fileSlug, // Use custom slug if provided, otherwise use filename
     title,
     date,
     excerpt,

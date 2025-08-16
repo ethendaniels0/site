@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom"
 import {
   Sidebar,
   SidebarContent,
@@ -78,10 +78,15 @@ const socialLinks = [
   }
 ]
 
-function AppSidebar({ activeSection, setActiveSection }: { 
-  activeSection: string
-  setActiveSection: (section: string) => void 
-}) {
+function AppSidebar() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  // Get the base section from the path (blog, stories, projects, etc.)
+  let activeSection = location.pathname.split('/')[1] || 'blog'
+  // Handle root path as blog
+  if (location.pathname === '/' || activeSection === '') {
+    activeSection = 'blog'
+  }
   return (
     <Sidebar>
       <SidebarHeader className="p-6">
@@ -98,7 +103,7 @@ function AppSidebar({ activeSection, setActiveSection }: {
               {navigation.map((item) => (
                 <SidebarMenuItem key={item.id}>
                   <SidebarMenuButton 
-                    onClick={() => setActiveSection(item.id)}
+                    onClick={() => navigate(item.id === 'blog' ? '/' : `/${item.id}`)}
                     isActive={activeSection === item.id}
                   >
                     <item.icon className="h-4 w-4" />
@@ -145,23 +150,40 @@ function AppSidebar({ activeSection, setActiveSection }: {
 }
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState("blog")
-  
-  const ActiveComponent = navigation.find(item => item.id === activeSection)?.component || BlogSection
+  const location = useLocation()
+  const isSplitView = location.pathname.startsWith('/blog') || location.pathname === '/' || location.pathname.startsWith('/stories')
 
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        <AppSidebar activeSection={activeSection} setActiveSection={setActiveSection} />
+        <AppSidebar />
         
         <main className="flex-1">
-          {activeSection === 'blog' || activeSection === 'stories' ? (
+          {isSplitView ? (
             <div className="h-screen overflow-hidden py-6 px-6">
-              <ActiveComponent />
+              <Routes>
+                <Route path="/" element={<BlogSection />} />
+                <Route path="/blog" element={<BlogSection />} />
+                <Route path="/blog/:slug" element={<BlogSection />} />
+                <Route path="/stories" element={<StoriesSection />} />
+                <Route path="/stories/:slug" element={<StoriesSection />} />
+                <Route path="/projects" element={<ProjectsSection />} />
+                <Route path="/bookshelf" element={<BookshelfSection />} />
+                <Route path="/contact" element={<ContactSection />} />
+              </Routes>
             </div>
           ) : (
             <div className="container max-w-4xl mx-auto p-6 overflow-auto h-screen">
-              <ActiveComponent />
+              <Routes>
+                <Route path="/" element={<BlogSection />} />
+                <Route path="/blog" element={<BlogSection />} />
+                <Route path="/blog/:slug" element={<BlogSection />} />
+                <Route path="/stories" element={<StoriesSection />} />
+                <Route path="/stories/:slug" element={<StoriesSection />} />
+                <Route path="/projects" element={<ProjectsSection />} />
+                <Route path="/bookshelf" element={<BookshelfSection />} />
+                <Route path="/contact" element={<ContactSection />} />
+              </Routes>
             </div>
           )}
         </main>

@@ -1,18 +1,31 @@
 import { useState, useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import { Calendar } from "lucide-react"
-import { getAllPosts, BlogPost } from "../lib/posts"
+import { getAllPosts, getPostBySlug, BlogPost } from "../lib/posts"
 import { BlogPostView } from "./BlogPostView"
 
 export function BlogSection() {
   const posts = getAllPosts()
+  const { slug } = useParams()
+  const navigate = useNavigate()
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
   
-  // Auto-select the most recent post on mount
+  // Handle slug-based selection or auto-select the most recent post
   useEffect(() => {
-    if (posts.length > 0 && !selectedPost) {
+    if (slug) {
+      const post = getPostBySlug(slug)
+      if (post) {
+        setSelectedPost(post)
+      } else {
+        // If slug doesn't exist, redirect to blog home
+        navigate('/blog')
+      }
+    } else if (posts.length > 0) {
       setSelectedPost(posts[0])
+      // Update URL to include the slug of the first post
+      navigate(`/blog/${posts[0].slug}`, { replace: true })
     }
-  }, [posts])
+  }, [slug, posts, navigate])
   
   if (posts.length === 0) {
     return (
@@ -34,7 +47,10 @@ export function BlogSection() {
             {posts.map((post) => (
               <button
                 key={post.slug}
-                onClick={() => setSelectedPost(post)}
+                onClick={() => {
+                  setSelectedPost(post)
+                  navigate(`/blog/${post.slug}`)
+                }}
                 className={`w-full text-left p-2 rounded-md transition-colors ${
                   selectedPost?.slug === post.slug 
                     ? "bg-accent text-accent-foreground" 
