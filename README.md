@@ -1,2 +1,57 @@
-#README
-This is some text.
+# Personal Site
+
+## Markdown Blog System
+
+Your blog now supports markdown posts! Here's how to use it:
+
+### Adding New Blog Posts
+
+1. Create a new `.md` file in `/content/blog/`
+2. Add frontmatter at the top with metadata:
+
+```markdown
+---
+title: Your Post Title
+date: 2024-03-20
+excerpt: A brief description of your post
+tags: [tag1, tag2, tag3]
+---
+
+# Your Markdown Content Here
+
+Write your post using standard markdown...
+```
+
+3. Import the new post in `/lib/posts.ts`:
+
+```typescript
+import yourPostRaw from '../content/blog/your-post.md?raw'
+
+// Add to rawPosts array:
+const rawPosts = [
+  // ... existing posts
+  { slug: 'your-post', content: yourPostRaw }
+]
+```
+
+### Markdown Features Supported
+
+- **Headers** (h1-h6)
+- **Bold** and *italic* text
+- Lists (ordered and unordered)
+- `Code blocks` with syntax highlighting
+- [Links](https://example.com)
+- Blockquotes
+- Tables
+- GitHub Flavored Markdown
+
+### Publishing
+
+Simply run `npm run build` and deploy to Vercel. Your posts will be statically generated at build time for optimal performance.
+
+### Development
+
+```bash
+npm run dev    # Start development server
+npm run build  # Build for production
+```
