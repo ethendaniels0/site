@@ -154,7 +154,7 @@ export default function App() {
         <AppSidebar activeSection={activeSection} setActiveSection={setActiveSection} />
         
         <main className="flex-1 overflow-auto">
-          <div className="container max-w-4xl mx-auto p-6">
+          <div className={`container max-w-4xl mx-auto ${activeSection === 'blog' ? 'py-6 pr-6 pl-3' : 'p-6'}`}>
             <ActiveComponent />
           </div>
         </main>

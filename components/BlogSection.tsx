@@ -25,10 +25,10 @@ export function BlogSection() {
   }
   
   return (
-    <div className="grid grid-cols-12 gap-8 h-full">
+    <div className="grid grid-cols-12 h-full">
       {/* Posts list sidebar */}
-      <div className="col-span-4 border-r pr-6">
-        <div className="sticky top-0">
+      <div className="col-span-4">
+        <div className="sticky top-0 pr-4">
           <h2 className="text-lg font-semibold mb-4">Posts</h2>
           <div className="space-y-2">
             {posts.map((post) => (
@@ -61,7 +61,7 @@ export function BlogSection() {
       </div>
       
       {/* Post content */}
-      <div className="col-span-8">
+      <div className="col-span-8 pl-4">
         {selectedPost && (
           <BlogPostView 
             post={selectedPost} 
