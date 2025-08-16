@@ -22,17 +22,7 @@ tags: [tag1, tag2, tag3]
 Write your post using standard markdown...
 ```
 
-3. Import the new post in `/lib/posts.ts`:
-
-```typescript
-import yourPostRaw from '../content/blog/your-post.md?raw'
-
-// Add to rawPosts array:
-const rawPosts = [
-  // ... existing posts
-  { slug: 'your-post', content: yourPostRaw }
-]
-```
+That's it! Your new post will be automatically loaded and displayed on the blog. The filename (without `.md`) becomes the post's URL slug.
 
 ### Markdown Features Supported
 

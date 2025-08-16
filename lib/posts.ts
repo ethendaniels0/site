@@ -8,10 +8,12 @@ export interface BlogPost {
   tags?: string[]
 }
 
-// Import markdown files
-import gettingStartedRaw from '../content/blog/getting-started-with-blogging.md?raw'
-import learningInPublicRaw from '../content/blog/learning-in-public.md?raw'
-import simpleSolutionsRaw from '../content/blog/simple-solutions.md?raw'
+// Dynamically import all markdown files from the blog directory
+const blogPostModules = import.meta.glob('../content/blog/*.md', { 
+  query: '?raw',
+  import: 'default',
+  eager: true 
+}) as Record<string, string>
 
 // Helper function to parse frontmatter
 function parseFrontmatter(content: string, slug: string): BlogPost {
@@ -49,17 +51,14 @@ function parseFrontmatter(content: string, slug: string): BlogPost {
   }
 }
 
-// Define all posts
-const rawPosts = [
-  { slug: 'getting-started-with-blogging', content: gettingStartedRaw },
-  { slug: 'learning-in-public', content: learningInPublicRaw },
-  { slug: 'simple-solutions', content: simpleSolutionsRaw }
-]
-
-// Parse all posts
-const posts: BlogPost[] = rawPosts.map(({ slug, content }) => 
-  parseFrontmatter(content, slug)
-).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+// Parse all posts dynamically
+const posts: BlogPost[] = Object.entries(blogPostModules)
+  .map(([path, content]) => {
+    // Extract slug from file path (e.g., '../content/blog/my-post.md' -> 'my-post')
+    const slug = path.split('/').pop()?.replace('.md', '') || ''
+    return parseFrontmatter(content, slug)
+  })
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
 export function getAllPosts(): BlogPost[] {
   return posts
