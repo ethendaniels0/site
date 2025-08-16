@@ -153,13 +153,13 @@ export default function App() {
       <div className="min-h-screen flex w-full">
         <AppSidebar activeSection={activeSection} setActiveSection={setActiveSection} />
         
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1">
           {activeSection === 'blog' ? (
-            <div className="h-full py-6 pr-6">
+            <div className="h-screen overflow-hidden py-6 px-6">
               <ActiveComponent />
             </div>
           ) : (
-            <div className="container max-w-4xl mx-auto p-6">
+            <div className="container max-w-4xl mx-auto p-6 overflow-auto h-screen">
               <ActiveComponent />
             </div>
           )}

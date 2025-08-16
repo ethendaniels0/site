@@ -25,12 +25,12 @@ export function BlogSection() {
   }
   
   return (
-    <div className="grid grid-cols-12 h-full">
+    <div className="flex h-full gap-8">
       {/* Posts list sidebar */}
-      <div className="col-span-3">
-        <div className="sticky top-6 h-[calc(100vh-6rem)] overflow-y-auto pr-4">
+      <div className="w-64 flex-shrink-0">
+        <div className="sticky top-0 pl-2">
           <h2 className="text-lg font-semibold mb-4">Posts</h2>
-          <div className="space-y-2">
+          <div className="space-y-2 pr-4">
             {posts.map((post) => (
               <button
                 key={post.slug}
@@ -61,7 +61,7 @@ export function BlogSection() {
       </div>
       
       {/* Post content */}
-      <div className="col-span-9 pl-6">
+      <div className="flex-1 overflow-y-auto pr-6" style={{ height: 'calc(100vh - 6rem)' }}>
         {selectedPost && (
           <BlogPostView 
             post={selectedPost} 
