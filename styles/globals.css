@@ -37,7 +37,7 @@
   --chart-4: 43 36% 96%;
   --chart-5: 0 0% 0%;
   --radius: 0.5rem;
-  --sidebar-background: 110 42% 88%;
+  --sidebar: 110 42% 88%;
   --sidebar-foreground: 108 13% 12%;
   --sidebar-primary: 108 13% 12%;
   --sidebar-primary-foreground: 110 42% 88%;
@@ -67,7 +67,7 @@
   --border: 148 30% 30%;
   --input: 148 30% 30%;
   --ring: 43 36% 96%;
-  --sidebar-background: 108 13% 12%;
+  --sidebar: 108 13% 12%;
   --sidebar-foreground: 43 36% 96%;
   --sidebar-primary: 43 36% 96%;
   --sidebar-primary-foreground: 108 13% 12%;
