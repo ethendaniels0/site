@@ -4,7 +4,6 @@ date: 2024-02-28
 excerpt: The unexpected wisdom from a stranger's story over morning coffee.
 category: People
 readTime: 4 min read
-likes: 15
 ---
 
 # The Empty Chair

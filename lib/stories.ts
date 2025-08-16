@@ -7,7 +7,6 @@ export interface Story {
   content: string
   category?: string
   readTime?: string
-  likes?: number
 }
 
 // Dynamically import all markdown files from the stories directory
@@ -30,8 +29,7 @@ function parseFrontmatter(content: string, fileSlug: string): Story {
       excerpt: '',
       content: content,
       category: 'General',
-      readTime: '5 min read',
-      likes: 0
+      readTime: '5 min read'
     }
   }
   
@@ -45,7 +43,6 @@ function parseFrontmatter(content: string, fileSlug: string): Story {
   const customSlug = frontmatter.match(/slug:\s*(.+)/)?.[1] // Custom slug from frontmatter
   const category = frontmatter.match(/category:\s*(.+)/)?.[1] || 'General'
   const readTime = frontmatter.match(/readTime:\s*(.+)/)?.[1] || '5 min read'
-  const likes = parseInt(frontmatter.match(/likes:\s*(\d+)/)?.[1] || '0')
   
   return {
     slug: customSlug || fileSlug, // Use custom slug if provided, otherwise use filename
@@ -54,7 +51,6 @@ function parseFrontmatter(content: string, fileSlug: string): Story {
     excerpt,
     category,
     readTime,
-    likes,
     content: markdownContent
   }
 }

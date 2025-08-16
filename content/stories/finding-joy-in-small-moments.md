@@ -4,7 +4,6 @@ date: 2024-03-08
 excerpt: Lessons learned from paying attention to the everyday magic around us.
 category: Life
 readTime: 3 min read
-likes: 18
 ---
 
 # The Art of Noticing

@@ -4,7 +4,6 @@ date: 2024-03-03
 excerpt: Why my biggest mistakes became my greatest teachers.
 category: Growth
 readTime: 7 min read
-likes: 31
 ---
 
 # Embracing the Fall

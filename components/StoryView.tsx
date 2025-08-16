@@ -1,4 +1,4 @@
-import { Calendar, Clock, Heart } from "lucide-react"
+import { Calendar, Clock } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Story } from "../lib/stories"
@@ -34,13 +34,6 @@ export function StoryView({ story }: StoryViewProps) {
             <div className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
               {story.readTime}
-            </div>
-          )}
-          
-          {story.likes !== undefined && story.likes > 0 && (
-            <div className="flex items-center gap-1">
-              <Heart className="h-4 w-4" />
-              {story.likes}
             </div>
           )}
         </div>

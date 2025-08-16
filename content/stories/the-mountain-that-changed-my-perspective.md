@@ -4,7 +4,6 @@ date: 2024-03-12
 excerpt: How a solo hiking trip taught me more about myself than years of self-reflection.
 category: Travel
 readTime: 5 min read
-likes: 24
 ---
 
 # The Beginning of Something New

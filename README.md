@@ -46,7 +46,6 @@ date: 2024-03-20
 excerpt: A brief description of your story
 category: Travel, Life, Growth, People, etc.
 readTime: 5 min read
-likes: 0
 slug: custom-url-slug  # Optional: defaults to filename
 ---
 
