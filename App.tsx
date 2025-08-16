@@ -19,9 +19,7 @@ import {
   FileText, 
   Library,
   Github,
-  Twitter,
-  Linkedin,
-  Globe
+  Linkedin
 } from "lucide-react"
 import { BlogSection } from "./components/BlogSection"
 import { ProjectsSection } from "./components/ProjectsSection"
@@ -68,26 +66,14 @@ const socialLinks = [
   {
     name: "GitHub",
     icon: Github,
-    url: "https://github.com/yourusername",
-    username: "@yourusername"
-  },
-  {
-    name: "Twitter",
-    icon: Twitter,
-    url: "https://twitter.com/yourusername",
-    username: "@yourusername"
+    url: "https://github.com/ethendaniels0?tab=repositories",
+    username: "@ethendaniels0"
   },
   {
     name: "LinkedIn",
     icon: Linkedin,
-    url: "https://linkedin.com/in/yourusername",
-    username: "Your Name"
-  },
-  {
-    name: "Website",
-    icon: Globe,
-    url: "https://yourwebsite.com",
-    username: "yoursite.com"
+    url: "https://www.linkedin.com/in/ethen-daniels/",
+    username: "Ethen Daniels"
   }
 ]
 
@@ -98,11 +84,8 @@ function AppSidebar({ activeSection, setActiveSection }: {
   return (
     <Sidebar>
       <SidebarHeader className="p-6">
-        <div className="space-y-2">
-          <h2 className="text-lg">Your Name</h2>
-          <p className="text-sm text-muted-foreground">
-            Developer, Writer, Learner
-          </p>
+        <div>
+          <h2 className="text-lg">Ethen Daniels</h2>
         </div>
       </SidebarHeader>
       
