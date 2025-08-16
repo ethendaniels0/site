@@ -62,7 +62,7 @@ export function BlogSection() {
       
       {/* Post content */}
       <div className="flex-1 overflow-y-auto pr-6 blog-content-scroll" style={{ height: 'calc(100vh - 6rem)' }}>
-        <div className="max-w-4xl mx-auto px-8">
+        <div className="max-w-5xl mx-auto px-8">
           {selectedPost && (
             <BlogPostView 
               post={selectedPost} 

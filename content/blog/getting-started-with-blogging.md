@@ -2,7 +2,6 @@
 title: Getting Started with Personal Blogging
 date: 2024-03-15
 excerpt: Thoughts on why I decided to start writing and sharing my experiences online.
-tags: [blogging, writing, personal]
 ---
 
 # Getting Started with Personal Blogging

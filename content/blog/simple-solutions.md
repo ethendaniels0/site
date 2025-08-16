@@ -2,7 +2,6 @@
 title: The Power of Simple Solutions
 date: 2024-03-05
 excerpt: Why sometimes the most elegant solution is the simplest one.
-tags: [programming, philosophy, simplicity]
 ---
 
 # The Power of Simple Solutions

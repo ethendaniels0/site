@@ -2,7 +2,6 @@
 title: Reflections on Learning in Public
 date: 2024-03-10
 excerpt: How sharing your learning journey can benefit both yourself and others.
-tags: [learning, community, growth]
 ---
 
 # Reflections on Learning in Public
