@@ -27,15 +27,15 @@ export function BlogSection() {
   return (
     <div className="grid grid-cols-12 h-full">
       {/* Posts list sidebar */}
-      <div className="col-span-4">
-        <div className="sticky top-0 pr-4">
+      <div className="col-span-3">
+        <div className="sticky top-6 h-[calc(100vh-6rem)] overflow-y-auto pr-4">
           <h2 className="text-lg font-semibold mb-4">Posts</h2>
           <div className="space-y-2">
             {posts.map((post) => (
               <button
                 key={post.slug}
                 onClick={() => setSelectedPost(post)}
-                className={`w-full text-left p-3 rounded-md transition-colors ${
+                className={`w-full text-left p-2 rounded-md transition-colors ${
                   selectedPost?.slug === post.slug 
                     ? "bg-accent text-accent-foreground" 
                     : "hover:bg-muted"
@@ -61,7 +61,7 @@ export function BlogSection() {
       </div>
       
       {/* Post content */}
-      <div className="col-span-8 pl-4">
+      <div className="col-span-9 pl-6">
         {selectedPost && (
           <BlogPostView 
             post={selectedPost} 
