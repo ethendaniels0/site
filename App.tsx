@@ -154,7 +154,7 @@ export default function App() {
         <AppSidebar activeSection={activeSection} setActiveSection={setActiveSection} />
         
         <main className="flex-1">
-          {activeSection === 'blog' ? (
+          {activeSection === 'blog' || activeSection === 'stories' ? (
             <div className="h-screen overflow-hidden py-6 px-6">
               <ActiveComponent />
             </div>

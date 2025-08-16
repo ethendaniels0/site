@@ -24,6 +24,32 @@ Write your post using standard markdown...
 
 That's it! Your new post will be automatically loaded and displayed on the blog. The filename (without `.md`) becomes the post's URL slug.
 
+## Stories System
+
+Your site also supports personal stories with the same automatic loading system!
+
+### Adding New Stories
+
+1. Create a new `.md` file in `/content/stories/`
+2. Add frontmatter at the top with metadata:
+
+```markdown
+---
+title: Your Story Title
+date: 2024-03-20
+excerpt: A brief description of your story
+category: Travel, Life, Growth, People, etc.
+readTime: 5 min read
+likes: 0
+---
+
+# Your Story Content Here
+
+Write your story using standard markdown...
+```
+
+That's it! Your new story will be automatically loaded and displayed in the stories section. The filename (without `.md`) becomes the story's URL slug.
+
 ### Markdown Features Supported
 
 - **Headers** (h1-h6)
