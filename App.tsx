@@ -16,8 +16,7 @@ import {
   BookOpen, 
   FolderOpen, 
   Mail, 
-  FileText, 
-  Library,
+  FileText,
   Github,
   Linkedin
 } from "lucide-react"
@@ -25,7 +24,7 @@ import { BlogSection } from "./components/BlogSection"
 import { ProjectsSection } from "./components/ProjectsSection"
 import { ContactSection } from "./components/ContactSection"
 import { StoriesSection } from "./components/StoriesSection"
-import { BookshelfSection } from "./components/BookshelfSection"
+// import { BookshelfSection } from "./components/BookshelfSection"
 import { Button } from "./components/ui/button"
 import { Separator } from "./components/ui/separator"
 import { Analytics } from "@vercel/analytics/react"
@@ -49,12 +48,12 @@ const navigation = [
     icon: BookOpen,
     component: StoriesSection
   },
-  {
-    id: "bookshelf",
-    title: "Bookshelf",
-    icon: Library,
-    component: BookshelfSection
-  },
+  // {
+  //   id: "bookshelf",
+  //   title: "Bookshelf",
+  //   icon: Library,
+  //   component: BookshelfSection
+  // },
   {
     id: "contact",
     title: "Contact",
@@ -90,7 +89,12 @@ function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="p-6">
-        <div>
+        <div className="flex flex-col items-center space-y-3">
+          <img 
+            src="/favicon.png" 
+            alt="Profile" 
+            className="w-16 h-16 rounded-full"
+          />
           <h2 className="text-lg">Ethen Daniels</h2>
         </div>
       </SidebarHeader>
@@ -168,7 +172,7 @@ export default function App() {
                 <Route path="/stories" element={<StoriesSection />} />
                 <Route path="/stories/:slug" element={<StoriesSection />} />
                 <Route path="/projects" element={<ProjectsSection />} />
-                <Route path="/bookshelf" element={<BookshelfSection />} />
+                {/* <Route path="/bookshelf" element={<BookshelfSection />} /> */}
                 <Route path="/contact" element={<ContactSection />} />
               </Routes>
             </div>
@@ -181,7 +185,7 @@ export default function App() {
                 <Route path="/stories" element={<StoriesSection />} />
                 <Route path="/stories/:slug" element={<StoriesSection />} />
                 <Route path="/projects" element={<ProjectsSection />} />
-                <Route path="/bookshelf" element={<BookshelfSection />} />
+                {/* <Route path="/bookshelf" element={<BookshelfSection />} /> */}
                 <Route path="/contact" element={<ContactSection />} />
               </Routes>
             </div>

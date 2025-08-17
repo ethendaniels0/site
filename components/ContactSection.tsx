@@ -64,13 +64,13 @@ export function ContactSection() {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
+    <div className="max-w-xl mx-auto space-y-6">
+      <div className="text-center">
         <h1 className="mb-2">Contact</h1>
         <p className="text-muted-foreground">Get in touch! I'd love to hear from you.</p>
       </div>
       
-      <div className="max-w-xl">
+      <div>
         <Card>
           <CardHeader>
             <CardTitle>Send a Message</CardTitle>
