@@ -1,11 +1,68 @@
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
 import { Label } from "./ui/label"
-import { Mail, MapPin, Phone } from "lucide-react"
 
 export function ContactSection() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null
+    message: string
+  }>({ type: null, message: "" })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.id]: e.target.value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus({ type: null, message: "" })
+
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: "success",
+          message: "Message sent successfully! I'll get back to you soon."
+        })
+        setFormData({ name: "", email: "", subject: "", message: "" })
+      } else {
+        setSubmitStatus({
+          type: "error",
+          message: data.error || "Failed to send message. Please try again."
+        })
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: "error",
+        message: "An error occurred. Please try again later."
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -13,71 +70,74 @@ export function ContactSection() {
         <p className="text-muted-foreground">Get in touch! I'd love to hear from you.</p>
       </div>
       
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="max-w-xl">
         <Card>
           <CardHeader>
             <CardTitle>Send a Message</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Your name" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="your@email.com" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="subject">Subject</Label>
-              <Input id="subject" placeholder="What's this about?" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="message">Message</Label>
-              <Textarea 
-                id="message" 
-                placeholder="Your message here..." 
-                className="min-h-[120px]"
-              />
-            </div>
-            <Button className="w-full">Send Message</Button>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Contact Information</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-3">
-              <Mail className="h-5 w-5 text-muted-foreground" />
-              <div>
-                <p className="text-sm">Email</p>
-                <p className="text-muted-foreground">hello@yourname.com</p>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input 
+                  id="name" 
+                  placeholder="Your name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <MapPin className="h-5 w-5 text-muted-foreground" />
-              <div>
-                <p className="text-sm">Location</p>
-                <p className="text-muted-foreground">Your City, Country</p>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input 
+                  id="email" 
+                  type="email" 
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <Phone className="h-5 w-5 text-muted-foreground" />
-              <div>
-                <p className="text-sm">Phone</p>
-                <p className="text-muted-foreground">+1 (555) 123-4567</p>
+              <div className="space-y-2">
+                <Label htmlFor="subject">Subject</Label>
+                <Input 
+                  id="subject" 
+                  placeholder="What's this about?"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-            </div>
-            
-            <div className="pt-4 border-t">
-              <p className="text-sm text-muted-foreground mb-3">
-                Feel free to reach out through any of these channels. I typically respond within 24 hours.
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Available for freelance work and interesting projects.
-              </p>
-            </div>
+              <div className="space-y-2">
+                <Label htmlFor="message">Message</Label>
+                <Textarea 
+                  id="message" 
+                  placeholder="Your message here..." 
+                  className="min-h-[120px]"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              
+              {submitStatus.type && (
+                <div className={`p-3 rounded-md text-sm ${
+                  submitStatus.type === "success" 
+                    ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" 
+                    : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                }`}>
+                  {submitStatus.message}
+                </div>
+              )}
+              
+              <Button 
+                type="submit" 
+                className="w-full" 
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </Button>
+            </form>
           </CardContent>
         </Card>
       </div>

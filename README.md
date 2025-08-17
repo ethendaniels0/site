@@ -82,3 +82,26 @@ Simply run `npm run build` and deploy to Vercel. Your posts will be statically g
 npm run dev    # Start development server
 npm run build  # Build for production
 ```
+
+## Contact Form Setup
+
+The contact form uses Resend to send emails. To set it up:
+
+1. **Get a Resend API Key**:
+   - Sign up at [Resend](https://resend.com)
+   - Go to [API Keys](https://resend.com/api-keys) and create a new API key
+
+2. **Set Environment Variables**:
+   - In Vercel Dashboard, go to Settings → Environment Variables
+   - Add the following variables:
+     - `RESEND_API_KEY`: Your Resend API key
+     - `TO_EMAIL`: Your email address where you want to receive messages
+
+3. **Configure Domain (Optional)**:
+   - For production, verify your domain in Resend
+   - Update the `from` email in `/api/send-email.ts` to use your domain
+
+4. **Local Development**:
+   - Copy `.env.example` to `.env.local`
+   - Fill in your API key and email address
+   - Note: Contact form will only work when deployed to Vercel
