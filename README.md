@@ -68,9 +68,23 @@ That's it! Your new story will be automatically loaded and displayed in the stor
 - Lists (ordered and unordered)
 - `Code blocks` with syntax highlighting
 - [Links](https://example.com)
+- **Images** with captions
 - Blockquotes
 - Tables
 - GitHub Flavored Markdown
+
+### Adding Images
+
+You can add images to your posts and stories:
+
+```markdown
+![Image description](/images/blog/your-image.jpg)
+```
+
+- Store blog images in `/public/images/blog/`
+- Store story images in `/public/images/stories/`
+- Images are responsive and include automatic captions from alt text
+- See `IMAGE_GUIDE.md` for detailed instructions
 
 ### Publishing
 

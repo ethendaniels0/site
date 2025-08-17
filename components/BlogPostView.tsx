@@ -134,6 +134,21 @@ export function BlogPostView({ post }: BlogPostViewProps) {
                 {children}
               </td>
             ),
+            img: ({ src, alt }) => (
+              <figure className="my-8">
+                <img 
+                  src={src} 
+                  alt={alt || ''} 
+                  className="w-full h-auto rounded-lg shadow-lg"
+                  loading="lazy"
+                />
+                {alt && (
+                  <figcaption className="text-center text-sm text-muted-foreground mt-2 italic">
+                    {alt}
+                  </figcaption>
+                )}
+              </figure>
+            ),
           }}
         >
           {post.content}

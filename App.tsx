@@ -93,7 +93,7 @@ function AppSidebar() {
           <img 
             src="/favicon.png" 
             alt="Profile" 
-            className="w-16 h-16 rounded-full"
+            className="w-16 h-auto"
           />
           <h2 className="text-lg">Ethen Daniels</h2>
         </div>
