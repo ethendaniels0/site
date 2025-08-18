@@ -46,15 +46,13 @@ export function NewsletterForm() {
   }
   
   return (
-    <div className="bg-muted/50 rounded-lg p-6 space-y-4">
+    <div className="bg-muted/50 rounded-lg p-4 space-y-4">
       <div className="flex items-center gap-2">
         <Mail className="h-5 w-5" />
-        <h3 className="font-semibold">Subscribe to Updates</h3>
+        <h3 className="font-semibold">Get Notifications</h3>
       </div>
       
-      <p className="text-sm text-muted-foreground">
-        Get notified when I publish new posts. No spam, unsubscribe anytime.
-      </p>
+
       
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className="flex gap-2">

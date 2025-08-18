@@ -42,14 +42,14 @@ export function BlogSection() {
     <div className="flex h-full gap-6">
       {/* Posts list sidebar */}
       <div className="w-80 flex-shrink-0">
-        <div className="sticky top-0 pl-2">
-          {/* Newsletter subscription */}
-          <div className="pr-4 mb-6">
+        <div className="sticky top-0">
+          {/* Newsletter subscription - aligned with post content */}
+          <div className="mb-6 -mt-4">
             <NewsletterForm />
           </div>
           
           <h2 className="text-lg font-semibold mb-4">Posts</h2>
-          <div className="space-y-2 pr-4">
+          <div className="space-y-2">
             {posts.map((post) => (
               <button
                 key={post.slug}
