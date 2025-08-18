@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { Calendar } from "lucide-react"
 import { getAllPosts, getPostBySlug, BlogPost } from "../lib/posts"
 import { BlogPostView } from "./BlogPostView"
+import { NewsletterForm } from "./NewsletterForm"
 
 export function BlogSection() {
   const posts = getAllPosts()
@@ -43,7 +44,7 @@ export function BlogSection() {
       <div className="w-80 flex-shrink-0">
         <div className="sticky top-0 pl-2">
           <h2 className="text-lg font-semibold mb-4">Posts</h2>
-          <div className="space-y-2 pr-4">
+          <div className="space-y-2 pr-4 mb-6">
             {posts.map((post) => (
               <button
                 key={post.slug}
@@ -72,6 +73,11 @@ export function BlogSection() {
                 </div>
               </button>
             ))}
+          </div>
+          
+          {/* Newsletter subscription */}
+          <div className="pr-4">
+            <NewsletterForm />
           </div>
         </div>
       </div>

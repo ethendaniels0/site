@@ -119,3 +119,77 @@ The contact form uses Resend to send emails. To set it up:
    - Copy `.env.example` to `.env.local`
    - Fill in your API key and email address
    - Note: Contact form will only work when deployed to Vercel
+
+## Newsletter Subscription Setup
+
+The blog includes a newsletter subscription form using Resend Audiences. To enable it:
+
+1. **Create an Audience in Resend**:
+   - Go to [Resend Dashboard](https://resend.com/audiences)
+   - Click "Create Audience"
+   - Name it (e.g., "Blog Subscribers")
+   - Copy the Audience ID
+
+2. **Add Environment Variable**:
+   - In Vercel Dashboard, add:
+     - `RESEND_AUDIENCE_ID`: Your Audience ID from step 1
+
+3. **Features**:
+   - Subscribers are automatically added to your Resend Audience
+   - Welcome email sent to new subscribers
+   - Duplicate subscriptions handled gracefully
+   - You can send broadcasts from Resend Dashboard
+
+4. **Sending Newsletter Updates**:
+   - Go to Resend Dashboard → Broadcasts
+   - Select your audience
+   - Compose and send your newsletter
+   - All subscribers will receive the update
+
+5. **Managing Subscribers**:
+   - View all subscribers in Resend Dashboard → Audiences
+   - Handle unsubscribes automatically via Resend
+   - Export subscriber list anytime
+
+**Note**: Without `RESEND_AUDIENCE_ID`, subscriptions will be emailed to you for manual processing.
+
+## Automatic Newsletter Notifications
+
+You have three options to automatically notify subscribers when you publish new content:
+
+### Option 1: GitHub Actions (Automatic)
+The `.github/workflows/newsletter-notification.yml` workflow automatically sends notifications when you push new markdown files to GitHub.
+
+**Setup:**
+1. Add these secrets to your GitHub repository (Settings → Secrets):
+   - `RESEND_API_KEY`: Your Resend API key
+   - `RESEND_AUDIENCE_ID`: Your Audience ID from Resend
+2. Update the domain in the workflow file
+3. Push new content to trigger notifications
+
+### Option 2: Build-Time Script (Semi-Automatic)
+Run `npm run build:notify` instead of `npm run build` to check for new posts and notify subscribers during deployment.
+
+**Setup:**
+1. Add to Vercel environment variables:
+   - `SITE_URL`: Your website URL (e.g., https://yourdomain.com)
+   - `ADMIN_TOKEN`: A secret token for API authentication
+2. Deploy with the build:notify command
+
+### Option 3: Manual Trigger
+Use the `/api/notify-subscribers` endpoint to manually send notifications after publishing.
+
+**Example:**
+```bash
+curl -X POST https://yourdomain.com/api/notify-subscribers \
+  -H "Authorization: Bearer YOUR_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Your Post Title",
+    "excerpt": "Post description",
+    "url": "https://yourdomain.com/blog/post-slug",
+    "type": "blog"
+  }'
+```
+
+**Tracking:** The `.last-notification-check` file tracks when notifications were last sent to avoid duplicates.

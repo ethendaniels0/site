@@ -1,0 +1,125 @@
+name: Send Newsletter Notification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/blog/*.md'
+      - 'content/stories/*.md'
+
+env:
+  # IMPORTANT: Update this to your actual domain!
+  SITE_URL: https://ethend.net
+  # Update this to your verified sending email
+  FROM_EMAIL: noreply@ethend.net
+  FROM_NAME: Ethen Daniels
+
+jobs:
+  notify-subscribers:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      
+      - name: Check for new posts
+        id: check-posts
+        run: |
+          # Get list of added/modified markdown files
+          NEW_FILES=$(git diff --name-only HEAD^ HEAD | grep -E 'content/(blog|stories)/.*\.md$' || true)
+          
+          if [ -z "$NEW_FILES" ]; then
+            echo "No new posts found"
+            echo "has_new_posts=false" >> $GITHUB_OUTPUT
+          else
+            echo "New posts found: $NEW_FILES"
+            echo "has_new_posts=true" >> $GITHUB_OUTPUT
+            echo "new_files=$NEW_FILES" >> $GITHUB_OUTPUT
+            
+            # Extract the first new post details
+            FIRST_FILE=$(echo "$NEW_FILES" | head -n1)
+            echo "post_file=$FIRST_FILE" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Parse post metadata
+        if: steps.check-posts.outputs.has_new_posts == 'true'
+        id: parse-post
+        run: |
+          POST_FILE="${{ steps.check-posts.outputs.post_file }}"
+          
+          # Extract frontmatter
+          TITLE=$(grep -m1 '^title:' "$POST_FILE" | sed 's/title: *//' | sed 's/^"//' | sed 's/"$//')
+          EXCERPT=$(grep -m1 '^excerpt:' "$POST_FILE" | sed 's/excerpt: *//' | sed 's/^"//' | sed 's/"$//')
+          
+          # Check for custom slug in frontmatter
+          CUSTOM_SLUG=$(grep -m1 '^slug:' "$POST_FILE" | sed 's/slug: *//' | sed 's/^"//' | sed 's/"$//' || true)
+          
+          # Use custom slug if available, otherwise use filename
+          if [ -n "$CUSTOM_SLUG" ]; then
+            SLUG="$CUSTOM_SLUG"
+          else
+            SLUG=$(basename "$POST_FILE" .md)
+          fi
+          
+          # Determine post type and URL
+          if [[ $POST_FILE == *"content/blog/"* ]]; then
+            POST_TYPE="blog post"
+            POST_URL="${{ env.SITE_URL }}/blog/$SLUG"
+          else
+            POST_TYPE="story"
+            POST_URL="${{ env.SITE_URL }}/stories/$SLUG"
+          fi
+          
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+          echo "excerpt=$EXCERPT" >> $GITHUB_OUTPUT
+          echo "post_type=$POST_TYPE" >> $GITHUB_OUTPUT
+          echo "post_url=$POST_URL" >> $GITHUB_OUTPUT
+      
+      - name: Send notification via Resend
+        if: steps.check-posts.outputs.has_new_posts == 'true'
+        run: |
+          # Create HTML email content
+          HTML_CONTENT=$(cat <<EOF
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+              New ${{ steps.parse-post.outputs.post_type }} published!
+            </h2>
+            
+            <h3 style="color: #555; margin-top: 30px;">
+              ${{ steps.parse-post.outputs.title }}
+            </h3>
+            
+            <p style="color: #666; line-height: 1.6; margin: 20px 0;">
+              ${{ steps.parse-post.outputs.excerpt }}
+            </p>
+            
+            <a href="${{ steps.parse-post.outputs.post_url }}" 
+               style="display: inline-block; padding: 12px 24px; background-color: #000; color: white; text-decoration: none; border-radius: 6px; margin: 20px 0;">
+              Read More →
+            </a>
+            
+            <hr style="margin: 40px 0; border: none; border-top: 1px solid #eee;">
+            
+            <p style="color: #999; font-size: 12px; text-align: center;">
+              You're receiving this because you subscribed to updates.<br>
+              <a href="{{unsubscribe}}" style="color: #999;">Unsubscribe</a>
+            </p>
+          </div>
+          EOF
+          )
+          
+          # Send broadcast
+          curl -X POST https://api.resend.com/broadcasts \
+            -H "Authorization: Bearer ${{ secrets.RESEND_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d @- <<EOF
+          {
+            "audience_id": "${{ secrets.RESEND_AUDIENCE_ID }}",
+            "from": "${{ env.FROM_NAME }} <${{ env.FROM_EMAIL }}>",
+            "subject": "New ${{ steps.parse-post.outputs.post_type }}: ${{ steps.parse-post.outputs.title }}",
+            "html": $(echo "$HTML_CONTENT" | jq -Rs .)
+          }
+          EOF
+          
+          echo "✅ Newsletter notification sent!"
