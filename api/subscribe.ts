@@ -67,54 +67,61 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       })
     }
     
-    // Add contact to Resend Audience
-    const response = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        unsubscribed: false,
-      }),
-    })
-    
-    if (!response.ok) {
-      const error = await response.json()
+    // Use Resend SDK to add contact
+    try {
+      const contactResponse = await resend.contacts.create({
+        email: email,
+        audienceId: audienceId,
+      })
       
+      // Send welcome email
+      await resend.emails.send({
+        from: 'Ethen Daniels <onboarding@resend.dev>',
+        to: email,
+        subject: 'Welcome to my newsletter!',
+        html: `
+          <h2>Thanks for subscribing!</h2>
+          <p>You'll receive an email whenever I publish new content.</p>
+          <p>If you ever want to unsubscribe, just click the link at the bottom of any newsletter email.</p>
+          <br>
+          <p>Best,<br>Ethen</p>
+        `,
+      })
+      
+      return res.status(200).json({ 
+        success: true,
+        id: contactResponse.data?.id,
+        message: 'Successfully subscribed!' 
+      })
+    } catch (audienceError: any) {
       // Check if contact already exists
-      if (error.message?.includes('already exists')) {
+      if (audienceError.message?.includes('already exists') || audienceError.message?.includes('duplicate')) {
         return res.status(200).json({ 
           success: true,
           message: 'You\'re already subscribed!' 
         })
       }
       
-      throw new Error(error.message || 'Failed to add contact')
+      console.error('Failed to add to audience:', audienceError)
+      
+      // Fallback: Just send notification email if audience add fails
+      const notifyResponse = await resend.emails.send({
+        from: 'Newsletter <onboarding@resend.dev>',
+        to: process.env.TO_EMAIL || 'your-email@example.com',
+        subject: 'New Newsletter Subscription',
+        html: `
+          <p>New subscriber: <strong>${email}</strong></p>
+          <p>Failed to add to Resend Audience automatically. Error: ${audienceError.message}</p>
+          <p>Please add manually to your audience.</p>
+        `,
+      })
+      
+      return res.status(200).json({ 
+        success: true,
+        message: 'Thank you for subscribing! We\'ll add you to our list.',
+        id: notifyResponse.data?.id
+      })
     }
-    
-    const data = await response.json()
-    
-    // Optional: Send a welcome email
-    await resend.emails.send({
-      from: 'Ethen Daniels <onboarding@resend.dev>',
-      to: email,
-      subject: 'Welcome to my newsletter!',
-      html: `
-        <h2>Thanks for subscribing!</h2>
-        <p>You'll receive an email whenever I publish new content.</p>
-        <p>If you ever want to unsubscribe, just click the link at the bottom of any newsletter email.</p>
-        <br>
-        <p>Best,<br>Ethen</p>
-      `,
-    })
-    
-    return res.status(200).json({ 
-      success: true,
-      id: data.id,
-      message: 'Successfully subscribed!' 
-    })
   } catch (error) {
     console.error('Subscription error:', error)
     return res.status(500).json({ 
