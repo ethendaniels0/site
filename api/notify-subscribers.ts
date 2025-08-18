@@ -47,7 +47,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     `
 
     const response = await resend.broadcasts.create({
-      audience_id: audienceId,
+      audienceId: audienceId,
       from: 'Ethen Daniels <onboarding@resend.dev>',
       subject: `New ${type === 'blog' ? 'Post' : 'Story'}: ${title}`,
       html: emailHtml
@@ -56,7 +56,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ 
       success: true,
       message: 'Newsletter sent successfully',
-      broadcastId: response.id
+      broadcastId: response.data?.id
     })
   } catch (error) {
     console.error('Failed to send newsletter:', error)
