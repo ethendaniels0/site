@@ -43,8 +43,13 @@ export function BlogSection() {
       {/* Posts list sidebar */}
       <div className="w-80 flex-shrink-0">
         <div className="sticky top-0 pl-2">
+          {/* Newsletter subscription */}
+          <div className="pr-4 mb-6">
+            <NewsletterForm />
+          </div>
+          
           <h2 className="text-lg font-semibold mb-4">Posts</h2>
-          <div className="space-y-2 pr-4 mb-6">
+          <div className="space-y-2 pr-4">
             {posts.map((post) => (
               <button
                 key={post.slug}
@@ -73,11 +78,6 @@ export function BlogSection() {
                 </div>
               </button>
             ))}
-          </div>
-          
-          {/* Newsletter subscription */}
-          <div className="pr-4">
-            <NewsletterForm />
           </div>
         </div>
       </div>
