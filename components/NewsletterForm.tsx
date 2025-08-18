@@ -46,7 +46,7 @@ export function NewsletterForm() {
   }
   
   return (
-    <div className="bg-muted/50 rounded-lg p-4 space-y-4">
+    <div className="bg-muted/50 rounded-lg pr-4 pb-4 space-y-4">
       <div className="flex items-center gap-2">
         <Mail className="h-5 w-5" />
         <h3 className="font-semibold">Get Notifications</h3>

@@ -44,7 +44,7 @@ export function BlogSection() {
       <div className="w-80 flex-shrink-0">
         <div className="sticky top-0">
           {/* Newsletter subscription - aligned with post content */}
-          <div className="mb-6 -mt-4">
+          <div className="mb-6">
             <NewsletterForm />
           </div>
           
