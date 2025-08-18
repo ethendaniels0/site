@@ -67,11 +67,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       })
     }
     
+    // Log the audience ID to debug format issues
+    console.log('Audience ID format:', audienceId)
+    
     // Use Resend SDK to add contact
     try {
       const contactResponse = await resend.contacts.create({
         email: email,
         audienceId: audienceId,
+        unsubscribed: false,
       })
       
       // Send welcome email
