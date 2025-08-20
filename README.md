@@ -158,7 +158,7 @@ The blog includes a newsletter subscription form using Resend Audiences. To enab
 You have three options to automatically notify subscribers when you publish new content:
 
 ### Option 1: GitHub Actions (Automatic)
-The `.github/workflows/newsletter-notification.yml` workflow automatically sends notifications when you push new markdown files to GitHub.
+The `.github/workflows/newsletter-notification.yml` workflow automatically sends notifications when you push **new** markdown files to GitHub. Note: Only newly added posts trigger emails - editing or deleting existing posts will not send notifications.
 
 **Setup:**
 1. Add these secrets to your GitHub repository (Settings → Secrets):

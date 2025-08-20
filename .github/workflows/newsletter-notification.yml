@@ -1,5 +1,7 @@
 name: Send Newsletter Notification
 
+# Triggers when markdown files are pushed to main branch
+# Note: Only NEWLY ADDED posts trigger emails, not edits or deletions
 on:
   push:
     branches: [main]
@@ -26,11 +28,11 @@ jobs:
       - name: Check for new posts
         id: check-posts
         run: |
-          # Get list of added/modified markdown files
-          NEW_FILES=$(git diff --name-only HEAD^ HEAD | grep -E 'content/(blog|stories)/.*\.md$' || true)
+          # Get list of ONLY ADDED markdown files (not modified or deleted)
+          NEW_FILES=$(git diff --name-status HEAD^ HEAD | grep '^A' | grep -E 'content/(blog|stories)/.*\.md$' | cut -f2 || true)
           
           if [ -z "$NEW_FILES" ]; then
-            echo "No new posts found"
+            echo "No new posts found (only checking for added files, not modifications or deletions)"
             echo "has_new_posts=false" >> $GITHUB_OUTPUT
           else
             echo "New posts found: $NEW_FILES"
