@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { Calendar, Menu, X } from "lucide-react"
+import { Calendar, X, List } from "lucide-react"
 import { getAllStories, getStoryBySlug, Story } from "../lib/stories"
 import { StoryView } from "./StoryView"
+import { SidebarTrigger } from "../components/ui/sidebar"
 
 export function StoriesSection() {
   const stories = getAllStories()
@@ -42,19 +43,22 @@ export function StoriesSection() {
   return (
     <>
       {/* Mobile Header - only visible on mobile */}
-      <div className="lg:hidden flex items-center justify-between p-4 border-b sticky top-0 bg-background z-10">
+      <div className="lg:hidden flex items-center justify-between p-2 border-b sticky top-0 bg-background z-10">
+        <div className="flex items-center gap-2">
+          <SidebarTrigger className="p-2" />
+          {selectedStory && (
+            <span className="text-xs text-muted-foreground truncate max-w-[200px]">
+              {selectedStory.title}
+            </span>
+          )}
+        </div>
         <button
           onClick={() => setShowMobileSidebar(true)}
-          className="flex items-center gap-2 text-sm font-medium p-2 hover:bg-muted rounded-md"
+          className="flex items-center gap-1 text-sm font-medium p-2 hover:bg-muted rounded-md"
         >
-          <Menu className="h-5 w-5" />
+          <List className="h-5 w-5" />
           <span>Stories</span>
         </button>
-        {selectedStory && (
-          <span className="text-xs text-muted-foreground truncate max-w-[60%]">
-            {selectedStory.title}
-          </span>
-        )}
       </div>
 
       {/* Mobile Sidebar Overlay */}

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { Calendar, Menu, X } from "lucide-react"
+import { Calendar, X, List } from "lucide-react"
 import { getAllPosts, getPostBySlug, BlogPost } from "../lib/posts"
 import { BlogPostView } from "./BlogPostView"
 import { NewsletterForm } from "./NewsletterForm"
+import { SidebarTrigger } from "../components/ui/sidebar"
 
 export function BlogSection() {
   const posts = getAllPosts()
@@ -43,19 +44,22 @@ export function BlogSection() {
   return (
     <>
       {/* Mobile Header - only visible on mobile */}
-      <div className="lg:hidden flex items-center justify-between p-4 border-b sticky top-0 bg-background z-10">
+      <div className="lg:hidden flex items-center justify-between p-2 border-b sticky top-0 bg-background z-10">
+        <div className="flex items-center gap-2">
+          <SidebarTrigger className="p-2" />
+          {selectedPost && (
+            <span className="text-xs text-muted-foreground truncate max-w-[200px]">
+              {selectedPost.title}
+            </span>
+          )}
+        </div>
         <button
           onClick={() => setShowMobileSidebar(true)}
-          className="flex items-center gap-2 text-sm font-medium p-2 hover:bg-muted rounded-md"
+          className="flex items-center gap-1 text-sm font-medium p-2 hover:bg-muted rounded-md"
         >
-          <Menu className="h-5 w-5" />
+          <List className="h-5 w-5" />
           <span>Posts</span>
         </button>
-        {selectedPost && (
-          <span className="text-xs text-muted-foreground truncate max-w-[60%]">
-            {selectedPost.title}
-          </span>
-        )}
       </div>
 
       {/* Mobile Sidebar Overlay */}

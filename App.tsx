@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarTrigger,
 } from "./components/ui/sidebar"
 import { 
   BookOpen, 
@@ -178,6 +179,7 @@ export default function App() {
             </div>
           ) : (
             <div className="container max-w-4xl mx-auto p-6 overflow-auto h-screen">
+              <SidebarTrigger className="lg:hidden mb-4" />
               <Routes>
                 <Route path="/" element={<BlogSection />} />
                 <Route path="/blog" element={<BlogSection />} />
