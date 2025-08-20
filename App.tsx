@@ -15,14 +15,14 @@ import {
 } from "./components/ui/sidebar"
 import { 
   BookOpen, 
-  FolderOpen, 
+  // FolderOpen, 
   Mail, 
   FileText,
   Github,
   Linkedin
 } from "lucide-react"
 import { BlogSection } from "./components/BlogSection"
-import { ProjectsSection } from "./components/ProjectsSection"
+// import { ProjectsSection } from "./components/ProjectsSection"
 import { ContactSection } from "./components/ContactSection"
 import { StoriesSection } from "./components/StoriesSection"
 // import { BookshelfSection } from "./components/BookshelfSection"
@@ -37,12 +37,12 @@ const navigation = [
     icon: FileText,
     component: BlogSection
   },
-  {
-    id: "projects",
-    title: "Projects",
-    icon: FolderOpen,
-    component: ProjectsSection
-  },
+  // {
+  //   id: "projects",
+  //   title: "Projects",
+  //   icon: FolderOpen,
+  //   component: ProjectsSection
+  // },
   {
     id: "stories",
     title: "Stories",
@@ -172,7 +172,7 @@ export default function App() {
                 <Route path="/blog/:slug" element={<BlogSection />} />
                 <Route path="/stories" element={<StoriesSection />} />
                 <Route path="/stories/:slug" element={<StoriesSection />} />
-                <Route path="/projects" element={<ProjectsSection />} />
+                {/* <Route path="/projects" element={<ProjectsSection />} /> */}
                 {/* <Route path="/bookshelf" element={<BookshelfSection />} /> */}
                 <Route path="/contact" element={<ContactSection />} />
               </Routes>
@@ -186,7 +186,7 @@ export default function App() {
                 <Route path="/blog/:slug" element={<BlogSection />} />
                 <Route path="/stories" element={<StoriesSection />} />
                 <Route path="/stories/:slug" element={<StoriesSection />} />
-                <Route path="/projects" element={<ProjectsSection />} />
+                {/* <Route path="/projects" element={<ProjectsSection />} /> */}
                 {/* <Route path="/bookshelf" element={<BookshelfSection />} /> */}
                 <Route path="/contact" element={<ContactSection />} />
               </Routes>
