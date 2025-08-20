@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarTrigger,
 } from "./components/ui/sidebar"
 import { 
   BookOpen, 
@@ -162,9 +163,10 @@ export default function App() {
       <div className="min-h-screen flex w-full">
         <AppSidebar />
         
-        <main className="flex-1">
+        <main className="flex-1 relative">
+          <SidebarTrigger className="lg:hidden fixed top-4 left-4 z-40" />
           {isSplitView ? (
-            <div className="h-screen overflow-hidden py-6 px-6">
+            <div className="h-screen overflow-hidden lg:py-6 lg:px-6">
               <Routes>
                 <Route path="/" element={<BlogSection />} />
                 <Route path="/blog" element={<BlogSection />} />

@@ -55,7 +55,7 @@ export function NewsletterForm() {
 
       
       <form onSubmit={handleSubmit} className="space-y-3">
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <input
             type="email"
             value={email}
@@ -68,11 +68,13 @@ export function NewsletterForm() {
           <button
             type="submit"
             disabled={status === "loading" || status === "success"}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 whitespace-nowrap"
           >
             {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
             {status === "success" && <CheckCircle className="h-4 w-4" />}
-            {status === "idle" || status === "error" ? "Subscribe" : status === "loading" ? "Subscribing..." : "Subscribed!"}
+            <span className="sm:inline">
+              {status === "idle" || status === "error" ? "Subscribe" : status === "loading" ? "Subscribing..." : "Subscribed!"}
+            </span>
           </button>
         </div>
         
