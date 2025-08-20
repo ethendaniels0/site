@@ -116,19 +116,29 @@ async function checkAndNotify() {
             <hr style="margin: 40px 0; border: none; border-top: 1px solid #eee;">
             <p style="color: #aaa; font-size: 12px; text-align: center;">
               You're receiving this because you subscribed to updates.<br>
-              <a href="{{unsubscribe}}" style="color: #aaa;">Unsubscribe</a>
+              <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color: #aaa;">Unsubscribe</a>
             </p>
           </div>
         `
         
-        const response = await resend.broadcasts.create({
-          audience_id: process.env.RESEND_AUDIENCE_ID,
+        // Create the broadcast
+        const createResponse = await resend.broadcasts.create({
+          audienceId: process.env.RESEND_AUDIENCE_ID,
           from: 'Ethen Daniels <noreply@yourdomain.com>',
           subject: `New ${latestPost.type === 'blog' ? 'Post' : 'Story'}: ${latestPost.title}`,
           html: emailHtml
         })
         
-        console.log('✅ Newsletter sent successfully!', response)
+        const broadcastId = createResponse.data?.id
+        
+        if (!broadcastId) {
+          throw new Error('Failed to create broadcast')
+        }
+        
+        // Send the broadcast
+        const sendResponse = await resend.broadcasts.send(broadcastId)
+        
+        console.log('✅ Newsletter created and sent!', { broadcastId, sendId: sendResponse.data?.id })
       } else {
         console.log('📭 No subscribers to notify')
       }

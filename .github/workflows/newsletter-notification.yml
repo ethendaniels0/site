@@ -103,14 +103,14 @@ jobs:
             
             <p style="color: #999; font-size: 12px; text-align: center;">
               You're receiving this because you subscribed to updates.<br>
-              <a href="{{unsubscribe}}" style="color: #999;">Unsubscribe</a>
+              <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color: #999;">Unsubscribe</a>
             </p>
           </div>
           EOF
           )
           
-          # Send broadcast
-          curl -X POST https://api.resend.com/broadcasts \
+          # Create broadcast
+          BROADCAST_RESPONSE=$(curl -s -X POST https://api.resend.com/broadcasts \
             -H "Authorization: Bearer ${{ secrets.RESEND_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d @- <<EOF
@@ -121,5 +121,24 @@ jobs:
             "html": $(echo "$HTML_CONTENT" | jq -Rs .)
           }
           EOF
+          )
           
-          echo "✅ Newsletter notification sent!"
+          echo "Broadcast creation response: $BROADCAST_RESPONSE"
+          
+          # Extract broadcast ID from response
+          BROADCAST_ID=$(echo "$BROADCAST_RESPONSE" | jq -r '.data.id // .id')
+          
+          if [ "$BROADCAST_ID" = "null" ] || [ -z "$BROADCAST_ID" ]; then
+            echo "❌ Failed to create broadcast"
+            exit 1
+          fi
+          
+          echo "Created broadcast with ID: $BROADCAST_ID"
+          
+          # Send the broadcast
+          SEND_RESPONSE=$(curl -s -X POST "https://api.resend.com/broadcasts/$BROADCAST_ID/send" \
+            -H "Authorization: Bearer ${{ secrets.RESEND_API_KEY }}" \
+            -H "Content-Type: application/json")
+          
+          echo "Send response: $SEND_RESPONSE"
+          echo "✅ Newsletter broadcast created and sent!"

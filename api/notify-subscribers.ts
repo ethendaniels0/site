@@ -41,22 +41,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         <hr style="margin: 40px 0; border: none; border-top: 1px solid #eee;">
         <p style="color: #aaa; font-size: 12px; text-align: center;">
           You're receiving this because you subscribed to updates.<br>
-          <a href="{{unsubscribe}}" style="color: #aaa;">Unsubscribe</a>
+          <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color: #aaa;">Unsubscribe</a>
         </p>
       </div>
     `
 
-    const response = await resend.broadcasts.create({
+    // Create the broadcast
+    const createResponse = await resend.broadcasts.create({
       audienceId: audienceId,
       from: 'Ethen Daniels <onboarding@resend.dev>',
       subject: `New ${type === 'blog' ? 'Post' : 'Story'}: ${title}`,
       html: emailHtml
     })
 
+    const broadcastId = createResponse.data?.id
+    
+    if (!broadcastId) {
+      throw new Error('Failed to create broadcast')
+    }
+
+    // Send the broadcast
+    const sendResponse = await resend.broadcasts.send(broadcastId)
+
     return res.status(200).json({ 
       success: true,
       message: 'Newsletter sent successfully',
-      broadcastId: response.data?.id
+      broadcastId: broadcastId,
+      sendId: sendResponse.data?.id
     })
   } catch (error) {
     console.error('Failed to send newsletter:', error)
