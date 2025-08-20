@@ -1,0 +1,33 @@
+---
+title: Democratization of Technology
+date: 2025-08-19
+excerpt: Building things is slow... for now.
+slug: democratization-of-tech
+---
+
+## The Democratization of Technology
+
+There's an optimistic picture of the world that has been rolling around in my mind. Over the past 20 years, the internet has dramatically improved the accessibility of information and technology. You can buy virtually anything if you have the money, learn anything if you have the will, and communicate with almost anyone on the planet. This has resulted in people developing new technologies, new markets, new skills, new arts and so on.
+
+Technology in particular has been dramatically improved directly as a result. It is hard to imagine that our modern technological advancements would be possible without the compounding effect of the internet. Exposure to technology became increasingly democratized. People can learn how to build robots, design genes, and code algorithms. No other human institution is as quickly developing. Our legal and social world has not caught up, and in my view, continues to fall behind in some areas.
+
+## Healthcare is about to change
+
+One such area is in health. In the United States, the failure is especially egregious. The per capita annual healthcare spending is significantly higher than other nations of equivalent or better healthcare. This is despite the fact that the machines and medicine required to actually treat most illnesses are rather inexpensive. For example, an X-ray of your arm might cost you 2000 USD. Building an X ray machine can be done in your garage for about [half the cost](https://www.youtube.com/watch?v=IiJAq53knwc). All the information to build and operate an X ray machine is publicly available. To me, this is an obvious economic pressure for change. It has not changed so far, simply because it is illegal for me to build an X ray machine and use it to help you. 
+
+Obviously, this is a simple example of a larger and often more dire problem. It is obviously bad when people cannot get the medical care they need because it is unaffordable for artificial reasons. I can't help but wonder though, does this come with a silver lining?
+
+In the near future, the developmental acceleration caused by artificial intelligence may further democratize access to technology. Imagine a future where, instead of having to learn how to build an x ray machine, you simply asked a machine to do it? What if you could ask it to manufacture the medication you need? In such a future, it is hard for me to imagine that this would not capture a significant portion of the population. The very fact that our current institutions are so fundamentally broken may be what hastens this kind of future. 
+
+We might not even need to wait for this zenith of AI ability to hit every household. Continuing our thread on health, there is already an appetite for "personally directed" healthcare. I learned about [Function Health](https://www.functionhealth.com/) recently, a company which will run a gambit of lab tests and provide a clinicians insights for a fraction of the cost that an uninsured patient would pay through traditional means. In my view, this is a further softening of our institutions, and a move toward higher democratization. GoodRx, Hims, and [costplusdrugs](https://www.costplusdrugs.com/) are all further examples of this. These companies only can exist because of the combination of the inordinate inefficiency of the healthcare system and the democratizing power of the internet. 
+
+## The Roots for Change Exist in Other Places
+
+There is an internet culture which celebrates the "making" of things. YouTube, Instructables, reddit and Thingiverse all are excellent resources of this type. These are community driven collections which can teach you how to build just about anything. You know the fancy Boston Dynamics robot dog spot? Well you can find several such low cost open source options from a [quick search](https://www.youtube.com/results?search_query=robot+dog+build). Some of these will run you as low as 1000 USD (in comparison to Spot 75000 USD). The design of hardware is already democratized. Heck, if you don't have the machines or knowhow to execute one of these projects, you could even pay a company like Xometry to manufacture and assemble it all by uploading the files and instructions.
+
+What will happen when AI systems start accelerating these hardware fields? What would that look like? I think we already have the answer if we take a look at what it has done to software engineering. The number of software startups has rocketed toward the moon. AI has made a larger fraction of the population capable of generating useful software products. This is the "Era of the Vibe Coder".  Companies like [Replit](https://replit.com/), Lovable and Glide are capitalizing on this. Their business is to let people who have no experience with software actually build something that works. The impact of this cannot be overstated. The thing which has been the primary driver of global development in the past 20 years has been directly and indirectly, the fruit of software engineering. That skill is now accessible to the average person at almost no cost.
+
+I am optimistic that the applications of AI in the physical space will lead to similarly powerful transformations. Physical research and development is slow. Building things is slow. Part of the reason it is slow, is because knowledge and technology access is distributed across a large number of people. You have to coordinate with the guy that knows about the particular thing you need. What happens when this isn't needed anymore? There are [companies](https://up.codes/features/ai) which are using AI to check for regulatory code compliance. I've personally spent weeks reading and deciphering regulatory code. Companies will pay consultants to review designs and plans for compliance, only for the result to be weeks of waiting, tens of thousands of dollars spent, and late breaking issues discovered. If AI can do the same job instantly, and work with you along the way, you're productive output is astronomically higher. You can do more, work faster, and more accurately.
+
+That example is limited to the professional space, but I think we will see this extend to become more generally accessible. I want to see the explosion of creativity and ingenuity that results from people having access to technology in the physical space like never before. I imagine people producing the things they need to make their lives and the lives around them better. Not only better, but exciting and interesting. Our collective ability to iterate and proliferate ideas will be faster than we can currently imagine.  I find that future very exciting. 
+
